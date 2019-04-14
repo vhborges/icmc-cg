@@ -16,7 +16,7 @@ void Window::framebufferCallback(GLFWwindow *window, int width, int height) {
 }
 
 void Window::createWindow() {
-  _window = glfwCreateWindow(500, 500, "CG 2019", NULL, NULL);
+  _window = glfwCreateWindow(700, 700, "CG 2019", NULL, NULL);
   if (_window == NULL) {
     std::cout << "Failed to create GLFW window\n";
     glfwTerminate();
@@ -27,6 +27,8 @@ void Window::createWindow() {
     std::cout << "Failed to initialize GLAD\n";
     exit(-2);
   }
+
+  glfwSwapInterval(1);
 
   glfwSetFramebufferSizeCallback(_window, this->framebufferCallback);
 }
