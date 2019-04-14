@@ -14,6 +14,8 @@ public:
 
       // Comandos de entrada
       processInput();
+      if (!pause)
+        angle -= increment;
 
       // Comandos de renderizacao vao aqui
       glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
@@ -21,11 +23,8 @@ public:
       // etc...
 
       glm::mat4 transform = glm::mat4(1.0f);
-      // transform = glm::translate(transform, glm::vec3(0.5f, 0.286f, 0.0f));
-      if (!pause)
-        angle -= increment;
+      transform = glm::translate(transform, glm::vec3(x, y, 0.0f));
       transform = glm::rotate(transform, angle, glm::vec3(0.0f, 0.0f, 1.0f));
-      // transform = glm::translate(transform, glm::vec3(-0.5f, -0.286f, 0.0f));
 
       glUseProgram(shaderProgramId);
       unsigned int transformLoc =
@@ -48,17 +47,25 @@ public:
   {
     if (glfwGetKey(_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
       glfwSetWindowShouldClose(_window, true);
-    else if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
+      y += 0.01;
+    if (glfwGetKey(_window, GLFW_KEY_S) == GLFW_PRESS)
+      y -= 0.01;
+    if (glfwGetKey(_window, GLFW_KEY_A) == GLFW_PRESS)
+      x -= 0.01;
+    if (glfwGetKey(_window, GLFW_KEY_D) == GLFW_PRESS)
+      x += 0.01;
+    if (glfwGetKey(_window, GLFW_KEY_E) == GLFW_PRESS)
     {
       if (!pause)
         increment += 0.001;
     }
-    else if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_Q) == GLFW_PRESS)
     {
       if (!pause)
         increment -= 0.001;
     }
-    else if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_PRESS)
     {
       if (release)
       {
@@ -69,28 +76,25 @@ public:
       }
       release = false;
     }
-    else if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_RELEASE)
-    {
-      if (!release)
-        release = true;
-    }
+    if (glfwGetKey(_window, GLFW_KEY_SPACE) == GLFW_RELEASE)
+      release = true;
   }
 
   void prepare() {
     float positions [] =
     {
-        -0.5f, 0.5f, 0.0f,
-        -0.5f, 0.0f, 0.0f,
+        -0.3f, 0.3f, 0.0f,
+        -0.3f, 0.0f, 0.0f,
         0.0f, 0.0f, 0.0f,
 
-        0.0f, 0.5f, 0.0f,
-        0.5f, 0.5f, 0.0f,
+        0.0f, 0.3f, 0.0f,
+        0.3f, 0.3f, 0.0f,
 
-        0.5f, 0.0f, 0.0f,
-        0.5f, -0.5f, 0.0f,
+        0.3f, 0.0f, 0.0f,
+        0.3f, -0.3f, 0.0f,
 
-        0.0f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f
+        0.0f, -0.3f, 0.0f,
+        -0.3f, -0.3f, 0.0f
     };
     
     unsigned int indices [] = 
@@ -189,7 +193,7 @@ protected:
   const char *_vertexShader;
   int shaderProgramId;
   unsigned int _VBO, _VAO, _EBO;
-  float angle, increment;
+  float angle, increment, x = 0, y = 0;
   bool pause, release;
 };
 
