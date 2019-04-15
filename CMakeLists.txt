@@ -20,7 +20,7 @@ add_subdirectory(cpp_src)
 ##################################################################
 # EXECUTAVEIS
 
-add_executable( catavento catavento.cpp )
+add_executable( catavento main.cpp )
 target_link_libraries( catavento glad ${GLFW_LIBRARIES} cg2019cpp )
 target_include_directories( catavento PUBLIC 
                             ${CG2019ICMC_CPP_INCLUDE_DIR}

@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <catavento.hpp>
 
 namespace cgicmc {
 
@@ -23,15 +24,23 @@ public:
 
   ///
   /// Run the application in a loop.
-  virtual void run();
+  void run(Catavento& c);
+
+  void prepare();
+  unsigned int loadVertexShader();
+  unsigned int loadFragmentShader();
+  void loadShaders();
 
   static void framebufferCallback(GLFWwindow *window, int width, int height);
 
 protected:
-  virtual void processInput();
+  void processInput(Catavento& c);
 
   int _viewPortSize;
+  int shaderProgramId;
+  unsigned int _VBO, _VAO, _EBO;
   GLFWwindow *_window;
+  const char *_vertexShader;
 };
 } // namespace cgicmc
 
