@@ -6,6 +6,7 @@
 namespace cgicmc {
 
 Window::Window() {
+  glfwSetErrorCallback(error_callback);
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -199,4 +200,10 @@ void Window::run(Catavento& catavento) {
     glDeleteBuffers(1, &_VBO);
     glDeleteBuffers(1, &_EBO);
 }
+
+void Window::error_callback(int error, const char* description)
+{
+  std::cerr << "GLFW error code: " << error << ". Description: " << description << std::endl;
+}
+
 } // namespace cgicmc

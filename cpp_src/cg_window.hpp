@@ -30,6 +30,7 @@ public:
   unsigned int loadVertexShader();
   unsigned int loadFragmentShader();
   void loadShaders();
+  static void error_callback(int error, const char* description);
 
   static void framebufferCallback(GLFWwindow *window, int width, int height);
 
