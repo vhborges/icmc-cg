@@ -87,15 +87,22 @@ void Window::prepare() {
       7, 8, 2  //quarto triangulo
   };
   glGenVertexArrays(1, &_VAO);
-  glGenBuffers(1, &_VBO);
-  glGenBuffers(1, &_EBO);
   glBindVertexArray(_VAO);
+
+  glGenBuffers(1, &_VBO);
   glBindBuffer(GL_ARRAY_BUFFER, _VBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_DYNAMIC_DRAW);
+
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+
+  glGenBuffers(1, &_EBO);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-  glEnableVertexAttribArray(0);
+  
+  glBindVertexArray(0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 unsigned int Window::loadVertexShader() {
@@ -170,7 +177,6 @@ void Window::run(Catavento& catavento) {
       // Comandos de renderizacao vao aqui
       glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT);
-      // etcatavento...
 
       glm::mat4 transform = glm::mat4(1.0f);
       transform = glm::translate(transform, catavento.getVec3Position());
@@ -182,6 +188,7 @@ void Window::run(Catavento& catavento) {
       glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
       glBindVertexArray(_VAO);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
       glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
       // Controla eventos e troca os buffers para renderizacao
       glfwSwapBuffers(_window);
