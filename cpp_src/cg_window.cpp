@@ -132,7 +132,7 @@ unsigned int Window::loadFragmentShader() {
                              "out vec4 FragColor;\n"
                              "void main()\n"
                              "{\n"
-                             "   FragColor = vec4(0.6f, 0.8f, 0.8f, 1.0f);\n"
+                             "   FragColor = vec4(0.4f, 0.8f, 0.8f, 1.0f);\n"
                              "}\n\0";
   unsigned int fragmentShaderId;
   fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
@@ -176,7 +176,7 @@ void Window::run(Catavento& catavento) {
       catavento.rotate();
 
       // Comandos de renderizacao vao aqui
-      glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
+      glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT);
 
       glm::mat4 transform = glm::mat4(1.0f);
